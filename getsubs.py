@@ -8,10 +8,6 @@ import mod_shooter
 
 #init
 markFile = "subsscaned.mark";
-mediaTypes = [".mp4", ".avi", ".wmv",".mkv",".mpeg"]
-
-#mod_shooter.test()
-
 
 #1. 接收参数 路径
 len_argv = len(sys.argv)
@@ -36,6 +32,7 @@ if os.path.exists(targetPath+"/"+markFile):
 target = mod_shooter.seekTarget(targetPath)
 #print(target)
 if target is None:
+    mod_shooter.setMark(targetPath, markFile)
     sys.exit("没有需要处理的目标")
 
 #3. 获取目标文件的特征数据
@@ -46,7 +43,7 @@ data_json = mod_shooter.getSubsJSON(target, sHash)
 # 备注：我认为有必要保存这个接口返回的列表数据，因为包含delay值，至少在字幕出现位移解决前应该保留
 #print(data_json)
 links = mod_shooter.parseFromResult(data_json.decode()) #bytes to string
-print(links) #debug ok
+#print(links) #debug ok
 
 #5. 下载字幕文件->命名
 if len(links)>0:
@@ -69,7 +66,4 @@ if len(links)>0:
     #subfile.close()
 
 #6. 标记已经处理过的目录
-#sys.exit(); #拦截后续的处理
-mark = open(targetPath+"/"+markFile, 'w')
-mark.write("ok")
-mark.close()
+mod_shooter.setMark(targetPath)

@@ -119,6 +119,12 @@ def getremotefilename(link):
     #print(r.info().get_filename())
     return r.info().get_filename()
 
+def setMark(path, markFile):
+    #markFile = "subsscaned.mark";
+    mark = open(path+"/"+markFile, 'w')
+    mark.write("ok")
+    mark.close()
+
 def test():
     print("ok")
 
